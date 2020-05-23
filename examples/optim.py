@@ -6,10 +6,12 @@ import torchconfig
 
 
 class Net(nn.Module):
-    def __init__(self, input_size, output_size):
+    def __init__(self, input_size, hidden_size, output_size, CONFIG):
         super().__init__()
         self.layers = nn.Sequential(
-            nn.Linear(input_size, output_size),
+            nn.Linear(input_size, hidden_size),
+            torchconfig.get_activation_layer_from_dict(CONFIG["activation"]),
+            nn.Linear(hidden_size, output_size),
         )
 
     def forward(self, x):
@@ -29,6 +31,10 @@ def main():
             "base_lr": 0.01,
             "max_lr": 1,
         },
+        "activation": {
+            "name": "Softshrink",
+            "lambd": 0.8,
+        },
     }
 
     # Synthetic dataset
@@ -39,7 +45,7 @@ def main():
     Y = torch.randn(dataset_size, output_size)
 
     # Initialize neural network, optimizer, and lr_scheduler
-    net = Net(input_size=2, output_size=1)
+    net = Net(input_size=2, hidden_size=10, output_size=1, CONFIG=CONFIG)
     optimizer = torchconfig.get_optimizer_from_dict(net.parameters(), CONFIG["optimizer"])
     lr_scheduler = torchconfig.get_lr_scheduler_from_dict(optimizer, CONFIG["lr_scheduler"])
 
