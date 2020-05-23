@@ -33,9 +33,11 @@ NAME_TO_NN_ACTIVATIONS = {
     "AdaptiveLogSoftmaxWithLoss": nn.AdaptiveLogSoftmaxWithLoss,
 }
 
+
 def get_activation_layer_from_args(*args, **kwargs):
     func = NAME_TO_NN_ACTIVATIONS[kwargs["name"]]
     return func(*args, **filter_args(kwargs, func))
+
 
 def get_activation_layer_from_dict(in_dict):
     return get_activation_layer_from_args(**in_dict)

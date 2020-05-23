@@ -22,19 +22,9 @@ def main():
     # Sample configuration file
     CONFIG = {
         "seed": 1,
-        "optimizer": {
-            "name": "SGD",
-            "lr": 0.1,
-        },
-        "lr_scheduler": {
-            "name": "CyclicLR",
-            "base_lr": 0.01,
-            "max_lr": 1,
-        },
-        "activation": {
-            "name": "Softshrink",
-            "lambd": 0.8,
-        },
+        "optimizer": {"name": "SGD", "lr": 0.1,},
+        "lr_scheduler": {"name": "CyclicLR", "base_lr": 0.01, "max_lr": 1,},
+        "activation": {"name": "Softshrink", "lambd": 0.8,},
     }
 
     # Synthetic dataset
