@@ -43,6 +43,7 @@ NAME_TO_LR_SCHEDULER = {
     "MultiplicativeLR": optim.lr_scheduler.MultiplicativeLR,
     "OneCycleLR": optim.lr_scheduler.OneCycleLR,
     "ReduceLROnPlateau": optim.lr_scheduler.ReduceLROnPlateau,
+    "StepLR": optim.lr_scheduler.StepLR,
 }
 
 

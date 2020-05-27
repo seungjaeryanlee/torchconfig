@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="torchconfig",  # Replace with your own username
-    version="0.1.2",
+    version="0.1.3",
     author="Seungjae Ryan Lee",
     author_email="seungjaeryanlee@github.com",
     description="TorchConfig is a Python package that simplifies configuring PyTorch.",
