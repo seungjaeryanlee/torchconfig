@@ -1,6 +1,6 @@
 import torch.optim as optim
 
-from torchconfig.filter import filter_args
+from torchconfig.filter import get_subdict, filter_args
 
 
 # Optimizers
@@ -42,10 +42,14 @@ NAME_TO_LR_SCHEDULER = {
 }
 
 
-def get_lr_scheduler_from_args(optimizer, *args, **kwargs):
-    lr_scheduler_func = NAME_TO_LR_SCHEDULER[kwargs["name"]]
-    return lr_scheduler_func(optimizer, *args, **filter_args(kwargs, lr_scheduler_func))
+def get_lr_scheduler_from_args(optimizer, ignore_cases=False, *args, **kwargs):
+    if ignore_cases:
+        name = list(get_subdict(kwargs, ["name"], ignore_cases).values())[0]
+        lr_scheduler_func = NAME_TO_LR_SCHEDULER[name]
+    else:
+        lr_scheduler_func = NAME_TO_LR_SCHEDULER[kwargs["name"]]
+    return lr_scheduler_func(optimizer, *args, **filter_args(kwargs, lr_scheduler_func, ignore_cases))
 
 
-def get_lr_scheduler_from_dict(optimizer, lr_scheduler_dict):
-    return get_lr_scheduler_from_args(optimizer, **lr_scheduler_dict)
+def get_lr_scheduler_from_dict(optimizer, lr_scheduler_dict, ignore_cases=False):
+    return get_lr_scheduler_from_args(optimizer, **lr_scheduler_dict, ignore_cases=ignore_cases)
