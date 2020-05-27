@@ -19,13 +19,17 @@ NAME_TO_OPTIMIZER = {
 }
 
 
-def get_optimizer_from_args(params, *args, **kwargs):
-    optimizer_func = NAME_TO_OPTIMIZER[kwargs["name"]]
-    return optimizer_func(params, *args, **filter_args(kwargs, optimizer_func))
+def get_optimizer_from_args(params, ignore_cases=False, *args, **kwargs):
+    if ignore_cases:
+        name = list(get_subdict(kwargs, ["name"], ignore_cases).values())[0]
+        optimizer_func = NAME_TO_OPTIMIZER[name]
+    else:
+        optimizer_func = NAME_TO_OPTIMIZER[kwargs["name"]]
+    return optimizer_func(params, *args, **filter_args(kwargs, optimizer_func, ignore_cases))
 
 
-def get_optimizer_from_dict(params, optimizer_dict):
-    return get_optimizer_from_args(params, **optimizer_dict)
+def get_optimizer_from_dict(params, optimizer_dict, ignore_cases=False):
+    return get_optimizer_from_args(params, **optimizer_dict, ignore_cases=ignore_cases)
 
 
 # Learning Rate Schedulers
