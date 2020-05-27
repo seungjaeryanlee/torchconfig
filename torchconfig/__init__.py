@@ -4,6 +4,7 @@ from .optim import *
 
 
 __all__ = [
+    "get_subdict",
     "filter_args",
     "get_optimizer_from_args",
     "get_optimizer_from_dict",
